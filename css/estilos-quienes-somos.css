@@ -1,0 +1,43 @@
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CUERPO DE PÁGINA */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdfd;
+  color: #b90a0a;
+  padding: 30px 20px;
+  line-height: 1.6;
+}
+
+/* TÍTULO PRINCIPAL */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* CONTENIDO DE PÁRRAFO */
+p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  white-space: pre-line; /* Mantiene saltos de línea manuales */
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+}

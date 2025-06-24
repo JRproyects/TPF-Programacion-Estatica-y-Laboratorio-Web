@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Continuar Compra</title>
+  <link rel="stylesheet" href="css/estilo.css" />
+  <link rel="stylesheet" href="css/estilo-post-compra.css">
+</head>
+
+<body>
+  <div id="navbar"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+      });
+  </script>
+
+  <div class="contenedor">
+    <h1>Proceso de Compra</h1>
+
+    <!-- Paso 1 -->
+    <div class="paso activo" id="paso1">
+      <h2>Resumen del Carrito</h2>
+      <div id="resumen-carrito"></div>
+      <p>Verificá que todos los talles y modelos sean correctos. Luego, hacé clic en <strong>"Iniciar compra"</strong>.
+      </p>
+      <button id="pagarBtn" class="boton" onclick="mostrarPaso(2)">Iniciar compra</button>
+    </div>
+
+    <!-- Paso 2: Datos de contacto -->
+    <div class="paso" id="paso2">
+      <h2>Datos de contacto</h2>
+      <div class="campo">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <span class="error" id="error-nombre"></span>
+      </div>
+
+      <div class="campo">
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <span class="error" id="error-email"></span>
+      </div>
+
+      <div class="campo">
+        <input type="tel" id="telefono" placeholder="Teléfono" required>
+        <span class="error" id="error-telefono"></span>
+      </div>
+
+      <button class="boton" onclick="validarPaso(3)">Siguiente</button>
+    </div>
+
+
+    <!-- Paso 3: Dirección -->
+    <div class="paso" id="paso3">
+      <h2>Dirección</h2>
+      <input type="text" id="direccion" placeholder="Dirección" required>
+      <input type="text" id="localidad" placeholder="Localidad" required>
+      <button class="boton" onclick="validarPaso(4)">Siguiente</button>
+    </div>
+
+    <!-- Paso 4: Medio de pago -->
+    <div class="paso" id="paso4">
+      <h2>Medio de pago</h2>
+      <select id="pago">
+        <option value="">Seleccioná un medio de pago</option>
+        <option value="Transferencia bancaria">Transferencia bancaria</option>
+        <option value="Mercado Pago">Mercado Pago</option>
+        <option value="Efectivo">Efectivo</option>
+      </select>
+      <button class="boton" onclick="validarPaso(5)">Siguiente</button>
+    </div>
+
+    <!-- Paso 5: Confirmación -->
+    <div class="paso" id="paso5">
+      <h2>Confirmar Compra</h2>
+      <p>Revisá toda la información antes de finalizar.</p>
+      <button class="boton" onclick="confirmarCompra()">CONFIRMAR</button>
+    </div>
+
+    <!-- Paso 6: Éxito -->
+    <div class="paso" id="paso6">
+      <h2>¡Gracias por tu compra!</h2>
+      <p>Se han enviado los datos correctamente. En breve recibirás un correo con los detalles del pedido.</p>
+      <a href="index.html" class="boton">Volver al inicio</a>
+    </div>
+  </div>
+
+  <script>
+    function mostrarPaso(n) {
+      document.querySelectorAll('.paso').forEach(p => p.classList.remove('activo'));
+      document.getElementById('paso' + n).classList.add('activo');
+    }
+
+    function confirmarCompra() {
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+
+      const nombre = document.getElementById("nombre").value;
+      const email = document.getElementById("email").value;
+      const telefono = document.getElementById("telefono").value;
+      const direccion = document.getElementById("direccion").value;
+      const localidad = document.getElementById("localidad").value;
+      const medioPago = document.getElementById("pago").value;
+
+      if (!nombre || !email || !telefono || !direccion || !localidad || !medioPago) {
+        alert("Por favor completá todos los campos.");
+        return;
+      }
+
+      console.log("Guardando datos del pedido...");
+      console.log({
+        nombre, email, telefono, direccion, localidad, medioPago, carrito
+      });
+
+      localStorage.removeItem("carrito");
+      mostrarPaso(6);
+    }
+    function validarPaso(n) {
+      let esValido = true;
+
+      if (n === 3) {
+        // Paso 2: Validar datos de contacto
+        const nombre = document.getElementById("nombre");
+        const email = document.getElementById("email");
+        const telefono = document.getElementById("telefono");
+
+        const errorNombre = document.getElementById("error-nombre");
+        const errorEmail = document.getElementById("error-email");
+        const errorTelefono = document.getElementById("error-telefono");
+
+        const nombreValido = /^[a-zA-Z\s]+$/.test(nombre.value.trim());
+        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+        const telefonoValido = /^\d{6,15}$/.test(telefono.value.trim());
+
+        if (!nombreValido) {
+          nombre.classList.add("input-error");
+          errorNombre.textContent = "Nombre inválido.";
+          esValido = false;
+        } else {
+          nombre.classList.remove("input-error");
+          errorNombre.textContent = "";
+        }
+
+        if (!emailValido) {
+          email.classList.add("input-error");
+          errorEmail.textContent = "Correo inválido.";
+          esValido = false;
+        } else {
+          email.classList.remove("input-error");
+          errorEmail.textContent = "";
+        }
+
+        if (!telefonoValido) {
+          telefono.classList.add("input-error");
+          errorTelefono.textContent = "Teléfono inválido.";
+          esValido = false;
+        } else {
+          telefono.classList.remove("input-error");
+          errorTelefono.textContent = "";
+        }
+      }
+
+      // Paso 3: Validar dirección y localidad
+      if (n === 4) {
+        const direccion = document.getElementById("direccion");
+        const localidad = document.getElementById("localidad");
+
+        if (!direccion.value.trim()) {
+          direccion.classList.add("input-error");
+          esValido = false;
+        } else {
+          direccion.classList.remove("input-error");
+        }
+
+        if (!localidad.value.trim()) {
+          localidad.classList.add("input-error");
+          esValido = false;
+        } else {
+          localidad.classList.remove("input-error");
+        }
+      }
+
+      // Paso 4: Validar medio de pago
+      if (n === 5) {
+        const medioPago = document.getElementById("pago");
+        if (!medioPago.value) {
+          medioPago.classList.add("input-error");
+          esValido = false;
+        } else {
+          medioPago.classList.remove("input-error");
+        }
+      }
+
+      if (esValido) {
+        mostrarPaso(n);
+      }
+    }
+
+
+    function cargarResumenCarrito() {
+      const resumenDiv = document.getElementById('resumen-carrito');
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      if (carrito.length === 0) {
+        resumenDiv.innerHTML = "<p>Tu carrito está vacío.</p>";
+        return;
+      }
+
+      let total = 0;
+      const lista = document.createElement("ul");
+      lista.style.listStyle = "none";
+      lista.style.padding = "0";
+
+      carrito.forEach(item => {
+        const li = document.createElement("li");
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        li.textContent = `${item.nombre} - $${item.precio} x ${item.cantidad} (Talle: ${item.talle || "No especificado"})`;
+        lista.appendChild(li);
+      });
+
+      const totalP = document.createElement("p");
+      totalP.innerHTML = `<strong>Total: $${total}</strong>`;
+
+      resumenDiv.appendChild(lista);
+      resumenDiv.appendChild(totalP);
+    }
+
+    window.onload = () => {
+      cargarResumenCarrito();
+    };
+  </script>
+  <script type="module" src="js/carrito-lateral.js"></script>
+  <script type="module" src="js/productos.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiénes Somos</title>
+  <link rel="stylesheet" href="css/estilos-quienes-somos.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+<script>
+  fetch('navbar.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+</script>
+  <h1>Quiénes Somos</h1>
+  <p>
+
+Hola, soy Camila, fundadora de Colita Traviesa, una tienda online dedicada a ofrecer los mejores accesorios para tus mascotas. Todo comenzó con una simple idea: hacer que nuestras mascotas, esos seres tan especiales en nuestras vidas, vivan de la mejor manera posible. Después de ser dueña de varias mascotas, me di cuenta de lo importante que es tener productos que no solo sean prácticos y funcionales, sino también de calidad y seguridad para ellos. Fue así como nació Colita Traviesa, con la misión de ofrecer un catálogo variado y de alta calidad para consentir a todos esos peludos que se ganan nuestro cariño a diario.
+
+¿Por qué vendemos estos productos?
+
+Nos apasiona la idea de brindar productos que no solo mejoren la calidad de vida de las mascotas, sino que también les permitan disfrutar de una vida más activa, feliz y cómoda. Cada accesorio que ofrecemos está pensado para mejorar su bienestar, estimulando su mente, facilitando su cuidado y, por supuesto, haciéndolos lucir increíblemente adorables.
+
+¿Hace cuánto vendemos estos productos?
+
+Colita Traviesa nace en 2025 con mucho entusiasmo y  llenos de energía, ideas frescas y mucho compromiso para ofrecerte lo mejor en productos para mascotas. A pesar de ser nuevos, nuestra pasión y dedicación por el bienestar animal nos impulsan a trabajar día a día para ofrecerte artículos de calidad y una experiencia de compra única
+
+¿Quiénes conforman el equipo de trabajo?
+
+Detrás de Colita Traviesa hay un equipo de amantes de los animales, desde expertos en productos para mascotas hasta diseñadores y operativos comprometidos con ofrecer lo mejor para ti y tu compañero de cuatro patas. Cada miembro de nuestro equipo comparte la pasión por los animales y trabaja con dedicación para brindarte productos que, como nosotros, ¡quieran lo mejor para tu mascota!
+
+ 
+
+Gracias por ser parte de nuestra comunidad. ¡Esperamos seguir compartiendo momentos felices con tus mascotas!</p>
+<script type="module" src="js/carrito-lateral.js"></script>
+<script type="module" src="js/productos.js"></script>
+<div id="footer"></div>
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+</body>
+</html>

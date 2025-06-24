@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carrito | Dropshipping</title>
+  <link rel="stylesheet" href="css/estilo-carrito.css">
+</head>
+<body>
+  <h1>Tu carrito</h1>
+  <ul id="carrito"></ul>
+  <h2 id="total"></h2>
+  <button id="pagarBtn" class="carrito-pagar-btn">Iniciar Compra</button>
+    <button class="agregar-carrito">Agregar al carrito</button>
+  </div>
+
+  <!-- Modal para selección de talle -->
+  <div id="modalTalle" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div class="modal-content" style="background:#fff; padding:20px; border-radius:5px; width:300px; text-align:center;">
+      <h3>Selecciona el talle</h3>
+      <div id="opcionesTalle" style="margin: 15px 0;">
+        <!-- Aquí irán los botones para talles -->
+      </div>
+      <button id="cancelarTalle" style="margin-top: 10px;">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modalTalle = document.getElementById('modalTalle');
+  const opcionesTalle = document.getElementById('opcionesTalle');
+  const cancelarTalle = document.getElementById('cancelarTalle');
+  let productoSeleccionado = null;
+
+  function actualizarContadorCarrito() {
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const contador = carrito.reduce((acc, prod) => acc + prod.cantidad, 0);
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+      cartCount.textContent = contador;
+      cartCount.style.display = contador > 0 ? 'inline-block' : 'none';
+    }
+  }
+
+  function agregarAlCarrito(producto) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const index = carrito.findIndex(p => p.id === producto.id && p.talle === producto.talle);
+    if (index !== -1) {
+      carrito[index].cantidad += producto.cantidad;
+    } else {
+      carrito.push(producto);
+    }
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarContadorCarrito();
+    renderizarCarrito();
+  }
+
+  function abrirModalTalle(producto) {
+    productoSeleccionado = producto;
+    opcionesTalle.innerHTML = '';
+    const talles = ['S', 'M', 'L', 'XL'];
+    talles.forEach(talle => {
+      const btn = document.createElement('button');
+      btn.textContent = talle;
+      btn.style.margin = "5px";
+      btn.style.padding = "10px 15px";
+      btn.style.cursor = "pointer";
+      btn.addEventListener('click', () => {
+        producto.talle = talle;
+        agregarAlCarrito(producto);
+        alert(`Se agregó al carrito: ${producto.nombre} (Talle: ${talle})`);
+        cerrarModalTalle();
+      });
+      opcionesTalle.appendChild(btn);
+    });
+    modalTalle.style.display = 'flex';
+  }
+
+  function cerrarModalTalle() {
+    modalTalle.style.display = 'none';
+    productoSeleccionado = null;
+  }
+
+  cancelarTalle.addEventListener('click', cerrarModalTalle);
+
+  // Añadir evento a botones "Agregar al carrito"
+  const botonesAgregar = document.querySelectorAll('.agregar-carrito');
+  botonesAgregar.forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const productoDiv = boton.closest('.producto');
+      const id = productoDiv.dataset.id || "1";
+      const nombre = productoDiv.querySelector('h3').textContent;
+      const precio = parseInt(productoDiv.querySelector('.precio').textContent);
+      const img = productoDiv.querySelector('img').src;
+      const producto = {
+        id: id,
+        nombre: nombre,
+        precio: precio,
+        cantidad: 1,
+        talle: null,
+        img: img
+      };
+      abrirModalTalle(producto);
+    });
+  });
+
+  // Renderizar el carrito
+  function renderizarCarrito() {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const ul = document.getElementById("carrito");
+    ul.innerHTML = "";
+    let total = 0;
+    if (carrito.length === 0) {
+      ul.innerHTML = "<li>El carrito está vacío.</li>";
+    } else {
+      carrito.forEach(p => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <img src="${p.img || 'img/placeholder.png'}" alt="${p.nombre}" style="width:60px;height:60px;object-fit:cover;vertical-align:middle;">
+          <strong>${p.nombre}</strong> (Talle: ${p.talle}) - $${p.precio}
+          <button onclick="cambiarCantidad('${p.id}', '${p.talle}', -1)">-</button>
+          <span>${p.cantidad}</span>
+          <button onclick="cambiarCantidad('${p.id}', '${p.talle}', 1)">+</button>
+          <button onclick="borrarDelCarrito('${p.id}', '${p.talle}')">Borrar</button>
+        `;
+        ul.appendChild(li);
+        total += p.precio * p.cantidad;
+      });
+    }
+    document.getElementById("total").textContent = "Total: $" + total;
+  }
+
+  // Cambia la cantidad de un producto, considerando talle también
+  window.cambiarCantidad = function(id, talle, delta) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const prod = carrito.find(p => p.id == id && p.talle === talle);
+    if (prod) {
+      prod.cantidad += delta;
+      if (prod.cantidad < 1) prod.cantidad = 1;
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      renderizarCarrito();
+      actualizarContadorCarrito();
+    }
+  };
+
+  // Borra un producto del carrito, considerando talle también
+  window.borrarDelCarrito = function(id, talle) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito = carrito.filter(p => !(p.id == id && p.talle === talle));
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    renderizarCarrito();
+    actualizarContadorCarrito();
+  };
+
+  document.getElementById("pagarBtn").onclick = function () {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  if (carrito.length === 0) {
+    alert("El carrito está vacío. Agregá productos antes de continuar.");
+    return;
+  }
+  window.location.href = "continuar-compra.html";
+};
+
+
+  renderizarCarrito();
+  actualizarContadorCarrito();
+});
+</script>
+<script type="module" src="js/carrito-lateral.js"></script>
+
+</body>
+</html>

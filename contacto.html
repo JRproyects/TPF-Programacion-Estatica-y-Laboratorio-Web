@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contacto | Dropshipping</title>
+  <link rel="stylesheet" href="css/estilos-contacto.css">
+</head>
+<body>
+  <div id="navbar"></div>
+<script>
+  fetch('navbar.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+</script>
+
+  <header class="main-header">
+    <!-- Puedes reutilizar tu header y menú aquí -->
+  </header>
+  <main>
+    <section class="contacto-section">
+      <h1>Contacto</h1>
+      <p>¿Tienes alguna consulta? ¡Escríbenos!</p>
+      <form id="form-contacto" class="form-contacto">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+      <div id="mensaje-exito" style="display:none; color:green; margin-top:15px;">
+        ¡Gracias por contactarnos! Te responderemos pronto.
+      </div>
+    </section>
+  </main>
+  <script>
+    // Mensaje de éxito simulado
+    document.getElementById('form-contacto').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('mensaje-exito').style.display = 'block';
+      this.reset();
+    });
+  </script>
+  <div id="footer"></div>
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+<script type="module" src="js/carrito-lateral.js"></script>
+<script type="module" src="js/productos.js"></script>
+
+</body>
+</html>

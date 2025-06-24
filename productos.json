@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nombre": "Remera Oversize",
+    "precio": 8999,
+    "img": "img/Remera Oversize.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Collar Plateado",
+    "precio": 5999,
+    "img": "img/Collar-Plateado.jpeg"
+  },
+  {
+    "id": 3,
+    "nombre": "Pretal H Sublimado",
+    "precio": 7500,
+    "img": "img/Pretal-H-Sublimado.jpeg"
+  },
+  {
+    "id": 4,
+    "nombre": "Correa Estampada",
+    "precio": 4500,
+    "img": "img/Correa-Estampada.webp"
+  },
+  {
+    "id":5,
+    "nombre": "Remera Messi",
+    "precio": 10000,
+    "img":"img/remera-messi.jpg"
+  }
+]

@@ -1,0 +1,66 @@
+.paso {
+    display: none;
+    margin-bottom: 2rem;
+}
+
+.paso.activo {
+    display: block;
+}
+
+.boton {
+    background-color: #2d3a2e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.boton:hover {
+    background-color: #1a201b;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.contenedor {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.input-error {
+  border: 2px solid red;
+}
+.campo {
+  margin-bottom: 15px;
+}

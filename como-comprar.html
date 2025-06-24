@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Cómo Comprar</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/estilos-como-comprar.css" />
+</head>
+
+<body>
+  <div id="navbar"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+      });
+  </script>
+  <h1>Cómo Comprar</h1>
+  <ol>Realizá una compra en simples pasos
+
+    <li>Elegí el producto que querés comprar.</li>
+    <li>Seleccioná el talle del producto que deseas adquirir [solo en los productos que lo requieran]. Si no sabes el
+      talle de tu mascota, no dudes en consultar la sección "Tabla de Talles" de nuestro Menu Principal.</li>
+    <li>Hacé clic en el botón "Agregar al carrito".</li>
+    <li>Repetí el mismo proceso hasta haber seleccionado todos los productos que desees.</li>
+    <li>Una vez que tengas los productos agregados en el carrito de compra, no olvides verificar que todos los talles y
+      modelos sean correctos. Luego, hacé clic en "Iniciar compra".</li>
+    <li>Completá tus datos de contacto y hacé clic en "Continuar".</li>
+    <li>Ingresá la dirección adonde querés recibir el producto. Luego hacé clic en "Continuar".</li>
+    <li>Elegí el medio de pago.</li>
+    <li>Una vez que hayas elegido el medio de pago, haz clic en "Continuar".</li>
+    <li>En la página de confirmación de compra, corrobora atentamente toda la información de la compra y presiona
+      CONFIRMAR para finalizar.</li>
+    <li>Después de confirmar, recibirás un e-mail de nuestra parte.</li>
+    <li>Una vez recibido el pago, comenzaremos el proceso para hacer envío de la compra a la dirección que nos hayas
+      proporcionado.</li>
+  </ol>
+  <div id="footer"></div>
+  <script>
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+  </script>
+  <script type="module" src="js/carrito-lateral.js"></script>
+  <script type="module" src="js/productos.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Guía de Talles</title>
+  <link rel="stylesheet" href="css/estilos-guia-talles.css">
+</head>
+<body>
+  <div id="navbar"></div>
+<script>
+  fetch('navbar.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('navbar').innerHTML = data;
+    });
+</script>
+  <h1>Guía de Talles</h1>
+  <p>¿Sabías que elegir el talle correcto para tu perro es esencial para su comodidad, seguridad y bienestar?
+
+Un pretal o una correa que no le quede bien puede causarle molestias, rozaduras e incluso lesiones. Lo mismo ocurre con la ropa, si es demasiado grande o pequeña, tu mascota se sentirá incómoda y no podrá disfrutarla al máximo.
+
+ 
+
+Te enseñaremos cómo tomar las medidas a tu peludo de forma sencilla y precisa para que puedas elegir el talle perfecto que no le impida disfruta al maximo cada paseo.
+
+ 
+
+Mide el contorno del cuello
+
+Coloca la cinta métrica alrededor del cuello de tu perro, justo debajo de la cabeza.
+
+Asegúrate de que la cinta esté ajustada pero no apretada.
+
+ 
+
+Mide el contorno del pecho
+
+Pasa la cinta métrica alrededor de la parte más ancha del pecho de tu perro, justo detrás de las patas delanteras.
+
+Asegúrate de que la cinta esté ajustada pero no apretada.
+
+ 
+
+Mide el largo de la espalda
+
+Coloca la cinta métrica en la base del cuello de tu perro.
+
+Extiéndela a lo largo de la espalda hasta la base de la cola.
+
+ 
+
+Mide el largo de las patas
+
+Para medir la pata delantera, coloca la cinta métrica en la base de la pata, junto a la almohadilla del carpo.
+
+Sube la cinta métrica hasta el codo o la axila, según la medida que necesites.
+
+Anota la medida en centímetros.
+
+Para medir la pata trasera, coloca la cinta métrica in the base of the paw, next to the tarsal pad.
+
+Sube la cinta métrica hasta la cadera, manteniendo la pata en posición recta.
+</p>
+  <form id="formTalles">
+    <input type="number" name="altura" placeholder="Altura en cm" required />
+    <input type="number" name="peso" placeholder="Peso en kg" required />
+    <select name="tipo">
+      <option value="remera">Remera</option>
+      <option value="collar">Collar</option>
+    </select>
+    <button type="submit">Recomendar</button>
+  </form>
+  <p id="resultado"></p>
+  <script>
+    document.getElementById('formTalles').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const altura = parseFloat(this.altura.value);
+      const peso = parseFloat(this.peso.value);
+      const tipo = this.tipo.value;
+      let resultado = '';
+
+      if (tipo === 'remera') {
+        if (peso < 5) resultado = 'Talle recomendado: XS o S';
+        else if (peso < 10) resultado = 'Talle recomendado: M';
+        else if (peso < 20) resultado = 'Talle recomendado: L';
+        else resultado = 'Talle recomendado: XL o XXL';
+      } else if (tipo === 'collar') {
+        if (altura < 25) resultado = 'Talle recomendado: XS';
+        else if (altura < 35) resultado = 'Talle recomendado: S';
+        else if (altura < 45) resultado = 'Talle recomendado: M';
+        else if (altura < 55) resultado = 'Talle recomendado: L';
+        else resultado = 'Talle recomendado: XL';
+      } else {
+        resultado = 'Por favor, selecciona un tipo válido.';
+      }
+
+      document.getElementById('resultado').textContent = resultado;
+    });
+  </script>
+
+  <div id="footer"></div>
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+<script type="module" src="js/carrito-lateral.js"></script>
+<script type="module" src="js/productos.js"></script>
+
+</body>
+</html>
